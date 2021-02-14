@@ -19,7 +19,7 @@ request.onupgradeneeded = function(event) {
 request.onsuccess = function(event) {
     // when db is successfully created with its object store (from onupgradeneeded)
     db = event.target.result;
-    console.log("result: ", db);
+    //console.log("result: ", db);
     // check if app is online, if yes run saveRecord() function to send all 
     if (navigator.onLine) {
         // function to send data
@@ -41,7 +41,6 @@ function saveRecord(record) {
     // access the object store for 'new_transaction'
     const budgetObjectStore = transaction.objectStore('new_transaction');
 
-    console.log("what is happening?")
     // add record to the store with add method
     budgetObjectStore.add(record);
 };
@@ -61,7 +60,7 @@ function uploadTransaction() {
     getAll.onsuccess = function() {
         // if there was data in the indexedDb's store send to api server...
         if (getAll.result.length > 0 ) {
-            fetch('/api/transaction/bulk', {
+            fetch('/api/transaction', {
                 method: 'POST',
                 body: JSON.stringify(getAll.result),
                 headers: {
@@ -69,10 +68,10 @@ function uploadTransaction() {
                     "Content-Type": 'application/json'
                 }
             })
-            .then(response => {
-                response.json()
-            })
+            .then(response =>  response.json())
+
             .then(serverResponse => {
+                //console.log("serverResponse: ", serverResponse)
                 if (serverResponse.message) {
                     throw new Error(serverResponse);
                 }
