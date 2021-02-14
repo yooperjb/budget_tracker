@@ -70,7 +70,6 @@ function uploadTransaction() {
                 }
             })
             .then(response => {
-                console.log("heyyyyy")
                 response.json()
             })
             .then(serverResponse => {
