@@ -121,7 +121,7 @@ function sendTransaction(isAdding) {
       "Content-Type": "application/json"
     }
   })
-  .then(response => {    
+  .then(response => {
     return response.json();
   })
   .then(data => {
@@ -135,7 +135,8 @@ function sendTransaction(isAdding) {
     }
   })
   .catch(err => {
-    // fetch failed, so save in indexed db
+    // fetch failed - network failure, so save in indexed db
+    console.log(err);
     saveRecord(transaction);
 
     // clear form
